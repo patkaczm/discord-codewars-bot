@@ -1,5 +1,7 @@
 import discord
 import bot_responses
+import SECRET
+import os
 
 
 async def send_message(message, user_message):
@@ -11,7 +13,6 @@ async def send_message(message, user_message):
 
 
 def run_discord_bot():
-    TOKEN = 'MTA2MzM3NjAwNDk1OTE5NTE4Ng.Gm8_JA.scIuXpbqYjpBjGULyDcLUF8ciuHCmLbZIJmFJg'
     client = discord.Client(intents=discord.Intents.all())
 
     @client.event
@@ -31,4 +32,4 @@ def run_discord_bot():
 
         await send_message(message, user_message)
 
-    client.run(TOKEN)
+    client.run(os.environ.get('TOKEN'))

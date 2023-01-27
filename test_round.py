@@ -4,25 +4,24 @@ import pytest
 
 
 class TestRound:
-    monday = datetime.strptime("23.01.2023 12:13:14", "%d.%m.%Y %H:%M:%S")
+    start_date = datetime.strptime("23.11.2023 12:33:44", "%d.%m.%Y %H:%M:%S")
+    end_date = start_date + timedelta(days=1)
 
-    def test_can_create_round_only_if_start_date_is_monday(self):
-        Round(start_date=self.monday)
+    def test_round_created_without_id_has_id_fixed(self):
+        r = Round(start_date=self.start_date, end_date=self.end_date)
+        assert r.start_date == self.start_date
+        assert r.end_date == self.end_date
+        assert r.id == -1
+
+    def test_round_created_with_id_has_id(self):
+        id = 13
+        r = Round(id=id, start_date=self.start_date, end_date=self.end_date)
+        assert r.id == id
+
+    def test_round_throws_if_start_date_is_before_end_date(self):
         with pytest.raises(Exception):
-            for day_in_week in range(1, 7):
-                Round(self.monday + timedelta(days=day_in_week))
+            Round(start_date=self.end_date, end_date=self.start_date)
 
-    def test_round_cares_only_about_start_date__time_is_fixed_to_midnight(self):
-        r = Round(start_date=self.monday)
-        dates = r.get_dates()
-        expected_start_date = datetime.strptime("23.01.2023 00:00:00", "%d.%m.%Y %H:%M:%S")
-        assert dates.start_date == expected_start_date
-
-    def test_round_has_fixed_end_time_for_a_second_before_midnight_on_sunday(self):
-        r = Round(start_date=self.monday)
-        dates = r.get_dates()
-        expected_end_date = datetime.strptime("29.01.2023 23:59:59", "%d.%m.%Y %H:%M:%S")
-        assert dates.end_date == expected_end_date
 
 # r = Round()
 # r.add_participant(username)      -> userManager

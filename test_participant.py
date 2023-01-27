@@ -2,16 +2,16 @@ from participant import Participant
 
 
 class TestParticipant:
-    id = 1
     round_id = 13
     username = 'some_user'
-    p = Participant(id, username, round_id)
 
-    def test_participant_has_id(self):
-        assert self.id == self.p.get_id()
+    def test_participant_created_without_id_has_id_fixed(self):
+        p = Participant(username=self.username, round_id=self.round_id)
+        assert p.username == self.username
+        assert p.round_id == self.round_id
+        assert -1 == p.id
 
-    def test_participant_has_username(self):
-        assert self.username == self.p.get_username()
-
-    def test_participant_has_round_id(self):
-        assert self.round_id == self.p.get_round_id()
+    def test_participant_created_with_id_has_id(self):
+        id = 1234
+        p = Participant(username=self.username, round_id=self.round_id, id=id)
+        assert p.id == id

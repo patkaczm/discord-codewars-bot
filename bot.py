@@ -12,7 +12,7 @@ class Bot:
         self.database = Database('test_database.sqlite')
         self.round_manager = RoundManager(database=self.database)
         self.participant_manager = ParticipantManager(database=self.database, round_manager=self.round_manager)
-        self.task_manager = TaskManager(database=self.database)
+        self.task_manager = TaskManager(database=self.database, round_manager=self.round_manager)
         self.responder = Responder(participant_manager=self.participant_manager, round_manager=self.round_manager,
                                    task_manager=self.task_manager)
 

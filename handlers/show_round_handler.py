@@ -18,11 +18,13 @@ class ShowRoundHandler:
         for match in matches:
             round_id = match.group(1)
             ret += self.__handle_show_round__(round_id)
-        return ret if ret != '' else None
+        return '```\n' + ret + '\n```' if ret != '' else None
 
     def __handle_show_round__(self, round_id):
         round = self.round_manager.get_round(round_id=round_id)
         participants = self.participant_manager.get_participants_for_round(round=round)
         tasks = self.task_manager.get_tasks(round)
 
-        return str(round) + '\n' + str(participants) + str(tasks)
+        return str(round) + '\n' \
+               + "Participants: " + ' '.join([str(p) for p in participants]) + '\n' \
+               + "Tasks: \n" + '\n'.join([str(t) for t in tasks])

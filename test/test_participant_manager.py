@@ -1,4 +1,4 @@
-from participant_manager import ParticipantManager
+from managers.participant_manager import ParticipantManager
 
 
 class TestParticipantManager:

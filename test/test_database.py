@@ -1,15 +1,14 @@
-from database import Database
+from ext.database import Database
 from unittest.mock import patch, MagicMock
-from round import Round
 from datetime import datetime
-from participant import Participant
+from data.participant import Participant
 
 def dupa_print():
     print("Hello")
 
 
 class TestDatabase:
-    filename = 'test_database.sqlite'
+    filename = '../test_database.sqlite'
     tables = [('ROUNDS',), ('TASKS',), ('CW_TASKS',), ('PARTICIPANTS',)]
     get_tables_query = "SELECT name from sqlite_master WHERE type='table'"
 

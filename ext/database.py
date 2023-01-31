@@ -15,18 +15,28 @@ class Database:
         self.__create_tasks_if_needed__(cur, tables)
         self.__create_participants_if_needed__(cur, tables)
 
-    def add_participant(self, participant):
+    def add_participant(self, username, round_id):
         self.conn.cursor().execute(
-            f"""INSERT INTO PARTICIPANTS VALUES ('{participant.username}', {participant.round_id})""")
+            f"""INSERT INTO PARTICIPANTS VALUES ('{username}', {round_id})""")
+        self.conn.commit()
+        return self.conn.cursor().lastrowid
 
     def get_participants(self, round_id):
         return self.conn.cursor().execute(
             f"""SELECT ROWID, * FROM PARTICIPANTS WHERE round_id = {round_id}"""
         ).fetchall()
 
-    def add_round(self, round_start_date, round_end_date):
-        self.conn.cursor().execute(
-            f"""INSERT INTO ROUNDS VALUES ('{round_start_date.strftime('%d.%m.%Y')}', '{round_end_date.strftime('%d.%m.%Y')}')""")
+    def get_participants(self):
+        return self.conn.cursor().execute(
+            f"""SELECT ROWID, * FROM PARTICIPANTS"""
+        ).fetchall()
+
+    def add_round(self, start_date: str, end_date: str):
+        cur = self.conn.cursor()
+        cur.execute(
+            f"""INSERT INTO ROUNDS VALUES ('{start_date}', '{end_date}')""")
+        self.conn.commit()
+        return cur.lastrowid
 
     def get_rounds(self):
         return self.conn.cursor().execute("""SELECT ROWID, * FROM ROUNDS""").fetchall()
@@ -35,6 +45,8 @@ class Database:
         self.conn.cursor().execute(
             f"""INSERT INTO CW_TASKS VALUES ({kyu}, '{cw_id}', '{name}')"""
         )
+        self.conn.commit()
+        return self.conn.cursor().lastrowid
 
     def get_cw_tasks(self):
         return self.conn.cursor().execute(
@@ -45,6 +57,8 @@ class Database:
         self.conn.cursor().execute(
             f"""INSERT INTO TASKS VALUES ({round_id}, {task_id})"""
         )
+        self.conn.commit()
+        return self.conn.cursor().lastrowid
 
     def get_tasks(self):
         return self.conn.cursor().execute(

@@ -1,24 +1,25 @@
-import codewars
+from managers.round_manager import RoundManager
+from managers.participant_manager import ParticipantManager
+from handlers.show_round_handler import ShowRoundHandler
+from handlers.show_rounds_handler import ShowRoundsHandler
+from handlers.add_round_handler import AddRoundHandler
+from handlers.show_participants_handler import ShowParticipantsHandler
+from handlers.add_participant_handler import AddParticipantHandler
 
+class Responder:
+    def __init__(self, participant_manager: ParticipantManager, round_manager: RoundManager):
+        self.participant_manager = participant_manager
+        self.round_manager = round_manager
+        self.message_handlers = [ShowRoundsHandler(round_manager),
+                                 AddRoundHandler(participant_manager, round_manager),
+                                 ShowRoundHandler(participant_manager, round_manager),
+                                 ShowParticipantsHandler(participant_manager, round_manager),
+                                 AddParticipantHandler(participant_manager, round_manager)]
 
-def handle_response(message) -> str:
-    message = message.lower()
-    api = codewars.CodewarsAPI()
+    def handle_message(self, message) -> str:
+        message = message.lower()
 
-    if message == 'hello':
-        return "Hey there!"
-
-    if message == '!help':
-        return "`This is help message :)`"
-
-    if 'exists' in message:
-        user = message.replace('exists', '').strip()
-        print(f'Check if user {user} exists')
-        return f'User: {user} {"exists" if api.does_user_exist(user) else "does not exist"}'
-
-    if 'done tasks' in message:
-        user = message.replace('done tasks', '').strip()
-        tasks = codewars.CodewarsTasks(api.get_user_done_tasks(user)).filter(language='python')
-        formatter = codewars.CodewarsDoneTasksFormatter()
-        return formatter.format(tasks, name=True, link=True)
-
+        for handler in self.message_handlers:
+            resp = handler(message)
+            if resp:
+                return resp

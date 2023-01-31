@@ -1,4 +1,4 @@
-from cw_task import CwTask
+from data.cw_task import CwTask
 
 
 class TestCwTask:

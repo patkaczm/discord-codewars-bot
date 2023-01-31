@@ -1,4 +1,4 @@
-from participant import Participant
+from data.participant import Participant
 
 
 class TestParticipant:

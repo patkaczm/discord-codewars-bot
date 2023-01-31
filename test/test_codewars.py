@@ -1,5 +1,5 @@
 import pytest
-from codewars import CodewarsAPI, CodewarsTasks
+from ext.codewars import CodewarsAPI, CodewarsTasks
 import responses
 
 

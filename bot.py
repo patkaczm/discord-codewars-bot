@@ -4,6 +4,7 @@ from responder import Responder
 from managers.participant_manager import ParticipantManager
 from managers.round_manager import RoundManager
 from ext.database import Database
+from managers.task_manager import TaskManager
 
 
 class Bot:
@@ -11,7 +12,9 @@ class Bot:
         self.database = Database('test_database.sqlite')
         self.round_manager = RoundManager(database=self.database)
         self.participant_manager = ParticipantManager(database=self.database, round_manager=self.round_manager)
-        self.responder = Responder(participant_manager=self.participant_manager, round_manager=self.round_manager)
+        self.task_manager = TaskManager(database=self.database)
+        self.responder = Responder(participant_manager=self.participant_manager, round_manager=self.round_manager,
+                                   task_manager=self.task_manager)
 
     async def send_message(self, message, user_message):
         try:

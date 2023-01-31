@@ -8,7 +8,7 @@ def dupa_print():
 
 
 class TestDatabase:
-    filename = '../test_database.sqlite'
+    filename = '../../test_database.sqlite'
     tables = [('ROUNDS',), ('TASKS',), ('CW_TASKS',), ('PARTICIPANTS',)]
     get_tables_query = "SELECT name from sqlite_master WHERE type='table'"
 

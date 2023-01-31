@@ -1,6 +1,6 @@
 import discord
 import os
-from bot_responses import Responder
+from responder import Responder
 from managers.participant_manager import ParticipantManager
 from managers.round_manager import RoundManager
 from ext.database import Database

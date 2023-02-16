@@ -5,6 +5,9 @@ class ShowRoundsHandler:
     def __init__(self, round_manager: RoundManager):
         self.round_manager = round_manager
 
+    def help(self):
+        return '/show rounds - return rounds\' list'
+
     def __call__(self, message):
         print(f"Check: {self.__class__.__name__}")
         if message == '/show rounds':

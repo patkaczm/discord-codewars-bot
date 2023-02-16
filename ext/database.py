@@ -1,5 +1,5 @@
 import sqlite3
-
+import helpers.codewars_tasks as helpers
 
 class Database:
     def __init__(self, filename):
@@ -14,6 +14,11 @@ class Database:
         self.__create_cw_tasks_if_needed__(cur, tables)
         self.__create_tasks_if_needed__(cur, tables)
         self.__create_participants_if_needed__(cur, tables)
+
+        if len(self.get_cw_tasks()) == 0:
+            #@todo just a temp solution
+            helpers._add_kyu_6(self.conn)
+
 
     def add_participant(self, username, round_id):
         self.conn.cursor().execute(
@@ -88,8 +93,8 @@ class Database:
             cur.execute("""CREATE TABLE TASKS (
                             round_id INTEGER not null,
                             task_id INTEGER not null,
-                            FOREIGN KEY (round_id) REFERENCES ROUNDS (ROWID),
-                            FOREIGN KEY (task_id) REFERENCES CW_TASKS (ROWID)
+                            FOREIGN KEY (round_id) REFERENCES ROUNDS (ROWID) ON DELETE CASCADE,
+                            FOREIGN KEY (task_id) REFERENCES CW_TASKS (ROWID) ON DELETE CASCADE 
                         );""")
 
     @staticmethod
@@ -98,5 +103,5 @@ class Database:
             cur.execute("""CREATE TABLE PARTICIPANTS (
                             username text NOT NULL,
                             round_id INTEGER NOT NULL,
-                            FOREIGN KEY (round_id) REFERENCES ROUNDS (ROWID)
+                            FOREIGN KEY (round_id) REFERENCES ROUNDS (ROWID) ON DELETE CASCADE 
                         );""")

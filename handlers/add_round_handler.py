@@ -9,6 +9,9 @@ class AddRoundHandler:
         self.participant_manager = participant_manager
         self.round_manager = round_manager
 
+    def help(self):
+        return "/add round {start date} {end date} - adds round, date must follow format (%d.%m.%Y %H:%M:%S)"
+
     def __call__(self, message):
         print(f"Check: {self.__class__.__name__}")
         regex = r"\/add round (\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2}) (\d{2}\.\d{2}\.\d{4} \d{2}:\d{2}:\d{2})"

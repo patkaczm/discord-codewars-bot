@@ -7,7 +7,7 @@ from handlers.add_round_handler import AddRoundHandler
 from handlers.show_participants_handler import ShowParticipantsHandler
 from handlers.add_participant_handler import AddParticipantHandler
 from handlers.roll_handler import RollHandler
-
+from handlers.help_handler import HelpHandler
 
 class Responder:
     def __init__(self, participant_manager: ParticipantManager, round_manager: RoundManager,
@@ -21,6 +21,9 @@ class Responder:
                                  ShowParticipantsHandler(participant_manager, round_manager),
                                  AddParticipantHandler(participant_manager, round_manager),
                                  RollHandler(participant_manager, round_manager, task_manager)]
+
+        hh = HelpHandler(self.message_handlers)
+        self.message_handlers.append(hh)
 
     def handle_message(self, message) -> str:
         message = message.lower()

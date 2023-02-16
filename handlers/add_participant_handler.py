@@ -8,6 +8,9 @@ class AddParticipantHandler:
         self.participant_manager = participant_manager
         self.round_manager = round_manager
 
+    def help(self):
+        return "/add participant {username} {round_id} - adds participant to the round with given id. Participant must exist on codewars."
+
     def __call__(self, message):
         print(f"Check: {self.__class__.__name__}")
         regex = r"\/add participant (\w+) (\d+)"

@@ -8,6 +8,9 @@ class ShowParticipantsHandler:
         self.participant_manager = participant_manager
         self.round_manager = round_manager
 
+    def help(self):
+        return '/show participants {round_id} - return participants assigned to round with given id'
+
     def __call__(self, message):
         regex = r"\/show participants (\d+)"
         matches = re.finditer(regex, message, re.MULTILINE)
@@ -22,4 +25,4 @@ class ShowParticipantsHandler:
         round = self.round_manager.get_round(round_id)
         participants = self.participant_manager.get_participants_for_round(round)
 
-        return ' '.join(participants) if participants else f'There are no participants for round {round_id}'
+        return ' '.join([p.username for p in participants]) if participants else f'There are no participants for round {round_id}'

@@ -8,8 +8,8 @@ from managers.task_manager import TaskManager
 
 
 class Bot:
-    def __init__(self):
-        self.database = Database('test_database.sqlite')
+    def __init__(self, database):
+        self.database = Database(database)
         self.round_manager = RoundManager(database=self.database)
         self.participant_manager = ParticipantManager(database=self.database, round_manager=self.round_manager)
         self.task_manager = TaskManager(database=self.database, round_manager=self.round_manager)

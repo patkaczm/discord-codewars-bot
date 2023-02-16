@@ -11,6 +11,9 @@ class RollHandler:
         self.round_manager = round_manager
         self.task_manager = task_manager
 
+    def help(self):
+        return '/roll {round_id} {number of tasks} - adds random {number of tasks} to round with given id'
+
     def __call__(self, message):
         print(f"Check: {self.__class__.__name__}")
         regex = r'\/roll (\d+) (\d+)'

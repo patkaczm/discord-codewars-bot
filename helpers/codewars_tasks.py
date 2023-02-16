@@ -456,18 +456,12 @@ kyu6 = [("Multidimensional Coordinate Encoding", "63be67b37060ec0a8b2fdcf7"),
 import sqlite3
 
 
-def _print_6():
-    conn = sqlite3.connect('../test_database.sqlite')
+def _add_kyu_6(conn):
     c = conn.cursor()
 
     for task in kyu6:
         t0 = t0 = task[0].replace("'", "")
         cmd = f"INSERT INTO CW_TASKS VALUES (6, '{task[1]}', '{t0}');"
-        print(cmd)
         c.execute(cmd)
 
-    print('We have inserted', c.rowcount, 'records to the table.')
     conn.commit()
-    conn.close()
-
-_print_6()
